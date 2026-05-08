@@ -1,0 +1,53 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git status)",
+      "Bash(git status *)",
+      "Bash(git diff)",
+      "Bash(git diff *)",
+      "Bash(git log)",
+      "Bash(git log *)",
+      "Bash(git branch)",
+      "Bash(git branch *)",
+      "Bash(npm test)",
+      "Bash(npm test *)",
+      "Bash(npm run lint)",
+      "Bash(npm run lint *)",
+      "Bash(ls)",
+      "Bash(ls *)",
+      "Bash(pwd)",
+      "Bash(cat *)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(sudo *)",
+      "Bash(git push --force *)",
+      "Bash(git push --force)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"const {execSync}=require('child_process');const now=new Date().toLocaleString('id-ID',{timeZone:'Asia/Jakarta',dateStyle:'full',timeStyle:'medium'});let branch='(bukan git repo)';try{branch=execSync('git branch --show-current',{encoding:'utf8'}).trim()||'(detached HEAD)'}catch(e){}let files='(tidak ada)';try{files=execSync('git log --diff-filter=M --name-only --format= -n 10',{encoding:'utf8'}).trim().split('\\n').filter(Boolean).slice(0,3).map((f,i)=>(i+1)+'. '+f).join('\\n')}catch(e){}console.log('\\n=== INFO SESI CLAUDE CODE ===');console.log('Tanggal & Waktu : '+now);console.log('Branch Git      : '+branch);console.log('3 File Terbaru  :\\n'+files);console.log('============================\\n')\"",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{try{const o=JSON.parse(d);const f=(o.tool_input||{}).file_path;if(f&&/\\.(js|ts|json|md)$/.test(f)){try{require('child_process').execSync('npx prettier --write '+JSON.stringify(f),{stdio:'inherit'})}catch(e){}}}catch(e){}})\"",
+            "timeout": 10000
+          }
+        ]
+      }
+    ]
+  }
+}
