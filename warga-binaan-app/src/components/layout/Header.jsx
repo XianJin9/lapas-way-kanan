@@ -71,7 +71,7 @@ export default function Header({
           <div className="flex items-center gap-2">
             {user ? (
               <div className="hidden lg:flex items-center gap-3">
-                <span className="text-primary-200 text-sm">{user.name}</span>
+                <span className="text-primary-200 text-sm">{user.nama}</span>
                 <button
                   type="button"
                   onClick={onLogout}

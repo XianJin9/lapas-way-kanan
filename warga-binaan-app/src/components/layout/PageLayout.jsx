@@ -1,16 +1,21 @@
 import { useEffect, useRef } from 'react'
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import Header from './Header'
 import Footer from './Footer'
+import { useAuth } from '../../contexts/AuthContext'
 
 export default function PageLayout() {
   const { pathname } = useLocation()
+  const navigate = useNavigate()
   const mainRef = useRef(null)
+  const { user, logout } = useAuth()
 
   useEffect(() => {
     window.scrollTo(0, 0)
     mainRef.current?.focus()
   }, [pathname])
+
+  const handleLogout = () => { logout(); navigate('/login') }
 
   return (
     <div className="min-h-screen bg-neutral-50 flex flex-col">
@@ -20,7 +25,7 @@ export default function PageLayout() {
       >
         Lewati ke konten utama
       </a>
-      <Header currentPath={pathname} />
+      <Header currentPath={pathname} user={user} onLogout={handleLogout} />
       <main
         id="main-content"
         ref={mainRef}
