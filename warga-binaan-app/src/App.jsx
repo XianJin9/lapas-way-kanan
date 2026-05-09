@@ -1,6 +1,8 @@
-import { Routes, Route } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
+import { Routes, Route, Outlet } from 'react-router-dom'
 import { PageLayout }    from './components/layout'
 import { AdminLayout, ProtectedRoute } from './components/admin'
+import { PageLoader }    from './components/ui'
 import Home            from './pages/Home'
 import Login           from './pages/Login'
 import Register        from './pages/Register'
@@ -14,10 +16,21 @@ import Penitipan       from './pages/Penitipan'
 import Syarat          from './pages/Syarat'
 import Privasi         from './pages/Privasi'
 import NotFound        from './pages/NotFound'
-import Dashboard       from './pages/admin/Dashboard'
-import BeritaAdmin     from './pages/admin/BeritaAdmin'
-import KunjunganAdmin  from './pages/admin/KunjunganAdmin'
-import PengaduanAdmin  from './pages/admin/PengaduanAdmin'
+
+// Halaman admin di-lazy-load untuk code splitting
+const Dashboard      = lazy(() => import('./pages/admin/Dashboard'))
+const BeritaAdmin    = lazy(() => import('./pages/admin/BeritaAdmin'))
+const KunjunganAdmin = lazy(() => import('./pages/admin/KunjunganAdmin'))
+const PengaduanAdmin = lazy(() => import('./pages/admin/PengaduanAdmin'))
+
+// Layout route perantara untuk Suspense admin
+function AdminSuspense() {
+  return (
+    <Suspense fallback={<PageLoader label="Memuat panel admin..." />}>
+      <Outlet />
+    </Suspense>
+  )
+}
 
 export default function App() {
   return (
@@ -41,15 +54,17 @@ export default function App() {
       <Route path="/register"       element={<Register />} />
       <Route path="/lupa-password"  element={<LupaPassword />} />
 
-      {/* Admin pages — protected */}
+      {/* Admin pages — protected + lazy-loaded */}
       <Route
         path="/admin"
         element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}
       >
-        <Route index             element={<Dashboard />} />
-        <Route path="berita"     element={<BeritaAdmin />} />
-        <Route path="kunjungan"  element={<KunjunganAdmin />} />
-        <Route path="pengaduan"  element={<PengaduanAdmin />} />
+        <Route element={<AdminSuspense />}>
+          <Route index             element={<Dashboard />} />
+          <Route path="berita"     element={<BeritaAdmin />} />
+          <Route path="kunjungan"  element={<KunjunganAdmin />} />
+          <Route path="pengaduan"  element={<PengaduanAdmin />} />
+        </Route>
       </Route>
 
       <Route path="*" element={<NotFound />} />
