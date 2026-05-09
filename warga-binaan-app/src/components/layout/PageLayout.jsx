@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import Header from './Header'
 import Footer from './Footer'
-import { useAuth } from '../../contexts/AuthContext'
+import useAuth from '../../hooks/useAuth'
 
 export default function PageLayout() {
   const { pathname } = useLocation()

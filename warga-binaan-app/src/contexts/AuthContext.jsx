@@ -1,38 +1,46 @@
-import { createContext, useContext, useEffect, useState } from 'react'
-
-const AuthContext = createContext(null)
+import { useState } from 'react'
+import AuthContext from './authContextDef'
+import * as authService from '../services/auth.service'
 
 export function AuthProvider({ children }) {
-  const [user, setUser]   = useState(null)
-  const [ready, setReady] = useState(false)
-
-  useEffect(() => {
+  const [user, setUser] = useState(() => {
     try {
       const saved = localStorage.getItem('lapas_user')
-      if (saved) setUser(JSON.parse(saved))
-    } catch { /* ignore malformed data */ }
-    setReady(true)
-  }, [])
+      return saved ? JSON.parse(saved) : null
+    } catch { return null }
+  })
 
-  const login = (userData) => {
-    setUser(userData)
+  const login = async ({ nik, password, role }) => {
+    const data = await authService.login({ nik, password, role })
+    const token    = data.token
+    const userData = data.user ?? data.data ?? data
+    localStorage.setItem('lapas_token', token)
     localStorage.setItem('lapas_user', JSON.stringify(userData))
+    setUser(userData)
+    return userData
   }
 
   const logout = () => {
+    authService.logout()
     setUser(null)
-    localStorage.removeItem('lapas_user')
+  }
+
+  const refresh = async () => {
+    try {
+      const data = await authService.getProfile()
+      const userData = data.user ?? data.data ?? data
+      localStorage.setItem('lapas_user', JSON.stringify(userData))
+      setUser(userData)
+      return userData
+    } catch {
+      logout()
+      return null
+    }
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, ready, isAdmin: user?.role === 'petugas' }}>
+    <AuthContext.Provider value={{ user, login, logout, refresh, isAdmin: user?.role === 'petugas' }}>
       {children}
     </AuthContext.Provider>
   )
-}
-
-export function useAuth() {
-  const ctx = useContext(AuthContext)
-  if (!ctx) throw new Error('useAuth harus digunakan di dalam AuthProvider')
-  return ctx
 }

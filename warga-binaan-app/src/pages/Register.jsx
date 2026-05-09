@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Alert, Button, Input } from '../components/ui'
 import useDocumentTitle from '../hooks/useDocumentTitle'
+import * as authService from '../services/auth.service'
 
 const INIT = { nama: '', nik: '', noHp: '', email: '', password: '', konfirmasiPassword: '' }
 
@@ -23,6 +24,7 @@ export default function Register() {
   const [errors, setErrors]   = useState({})
   const [loading, setLoading] = useState(false)
   const [setuju, setSetuju]   = useState(false)
+  const [errMsg, setErrMsg]   = useState('')
 
   const set = (field) => (e) => setForm((f) => ({ ...f, [field]: e.target.value }))
 
@@ -33,9 +35,15 @@ export default function Register() {
     setErrors(err)
     if (Object.keys(err).length) return
     setLoading(true)
-    await new Promise((r) => setTimeout(r, 1500))
-    setLoading(false)
-    navigate('/login')
+    setErrMsg('')
+    try {
+      await authService.register(form)
+      navigate('/login')
+    } catch (error) {
+      setErrMsg(error.response?.data?.message ?? 'Pendaftaran gagal. Coba lagi nanti.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -59,10 +67,12 @@ export default function Register() {
             <p className="text-neutral-500 text-sm mt-1">Untuk masyarakat dan keluarga warga binaan</p>
           </div>
 
-          <Alert variant="info" className="mb-6">
+          <Alert variant="info" className="mb-4">
             Akun ini untuk <strong>masyarakat umum</strong> dan keluarga warga binaan. Petugas lapas
             menggunakan akun yang diterbitkan oleh sistem kepegawaian.
           </Alert>
+
+          {errMsg && <Alert variant="danger" className="mb-4">{errMsg}</Alert>}
 
           <form onSubmit={submit} noValidate className="space-y-4">
             <Input label="Nama Lengkap" required placeholder="Sesuai KTP"

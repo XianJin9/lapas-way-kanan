@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Alert, Button, Input } from '../components/ui'
 import useDocumentTitle from '../hooks/useDocumentTitle'
-import { useAuth } from '../contexts/AuthContext'
+import useAuth from '../hooks/useAuth'
 
 export default function Login() {
   useDocumentTitle('Masuk')
@@ -28,10 +28,14 @@ export default function Login() {
 
     setLoading(true)
     setErrMsg('')
-    await new Promise((r) => setTimeout(r, 1200))
-    setLoading(false)
-    login({ nama: peran === 'petugas' ? (form.nik || 'Admin Lapas') : 'Pengguna', role: peran })
-    navigate(peran === 'petugas' ? '/admin' : '/')
+    try {
+      const userData = await login({ nik: form.nik, password: form.password, role: peran })
+      navigate(userData?.role === 'petugas' ? '/admin' : '/')
+    } catch (err) {
+      setErrMsg(err.response?.data?.message ?? 'Login gagal. Periksa kembali data Anda.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

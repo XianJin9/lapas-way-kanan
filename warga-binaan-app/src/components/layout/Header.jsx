@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const DEFAULT_NAV = [
@@ -16,10 +16,6 @@ export default function Header({
   onLogout,
 }) {
   const [menuOpen, setMenuOpen] = useState(false)
-
-  useEffect(() => {
-    setMenuOpen(false)
-  }, [currentPath])
 
   return (
     <header className="bg-primary-900 shadow-lg sticky top-0 z-40" role="banner">

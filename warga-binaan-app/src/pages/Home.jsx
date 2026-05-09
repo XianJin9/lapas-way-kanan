@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Badge, Card } from '../components/ui'
+import { Badge } from '../components/ui'
 import { BERITA, LAYANAN, STATS } from '../services/mockData'
 import useDocumentTitle from '../hooks/useDocumentTitle'
 

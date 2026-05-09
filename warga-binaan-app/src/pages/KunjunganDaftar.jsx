@@ -20,6 +20,8 @@ const SESI_OPT = [
 
 const JUMLAH_OPT = [1, 2, 3, 4, 5].map((n) => ({ value: String(n), label: `${n} orang` }))
 
+const MIN_DATE = new Date(Date.now() + 86400000 * 2).toISOString().split('T')[0]
+
 const INIT_FORM = {
   namaPengunjung: '', nikPengunjung: '', noHp: '', hubunganWBP: '',
   namaWBP: '', noRegisterWBP: '',
@@ -145,8 +147,6 @@ export default function KunjunganDaftar() {
     setDone(true)
   }
 
-  const minDate = new Date(Date.now() + 86400000 * 2).toISOString().split('T')[0]
-
   // ── Halaman sukses ──────────────────────────────────────────────────────────
   if (done) {
     return (
@@ -246,7 +246,7 @@ export default function KunjunganDaftar() {
           <Alert variant="warning">
             Kunjungan hanya tersedia Senin–Jumat. Daftarkan minimal H&#8209;2 sebelum tanggal kunjungan.
           </Alert>
-          <Input label="Tanggal Kunjungan" required type="date" min={minDate}
+          <Input label="Tanggal Kunjungan" required type="date" min={MIN_DATE}
             value={form.tanggalKunjungan} error={errors.tanggalKunjungan} onChange={set('tanggalKunjungan')} />
           <Select label="Sesi Kunjungan" required
             options={SESI_OPT} value={form.sesi}
