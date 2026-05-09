@@ -81,14 +81,19 @@ export default function Home() {
       {/* ── STATISTIK ────────────────────────────────────────────────────── */}
       <section className="bg-white border-b border-neutral-200" aria-label="Statistik Lapas">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-neutral-200">
+          <div className="grid grid-cols-2 md:grid-cols-4">
             {[
-              { value: STATS.totalWBP,            label: 'Warga Binaan Aktif',      sub: `${kapasitasPct}% kapasitas` },
-              { value: STATS.kunjunganBulanIni,    label: 'Kunjungan Bulan Ini',     sub: 'Mei 2025' },
-              { value: STATS.pengaduanDiproses,   label: 'Pengaduan Diproses',      sub: 'Dalam antrian' },
-              { value: STATS.remisiDiberikan,     label: 'Remisi Diberikan',         sub: 'Tahun 2025' },
-            ].map(({ value, label, sub }) => (
-              <div key={label} className="py-6 px-4 sm:px-8 text-center">
+              { value: STATS.totalWBP,          label: 'Warga Binaan Aktif',  sub: `${kapasitasPct}% kapasitas` },
+              { value: STATS.kunjunganBulanIni, label: 'Kunjungan Bulan Ini', sub: 'Mei 2025' },
+              { value: STATS.pengaduanDiproses, label: 'Pengaduan Diproses',  sub: 'Dalam antrian' },
+              { value: STATS.remisiDiberikan,   label: 'Remisi Diberikan',    sub: 'Tahun 2025' },
+            ].map(({ value, label, sub }, idx) => (
+              <div key={label} className={[
+                'py-6 px-4 sm:px-8 text-center border-neutral-200',
+                idx % 2 === 0 ? 'border-r' : '',
+                idx < 2 ? 'border-b md:border-b-0' : '',
+                idx < 3 ? 'md:border-r' : '',
+              ].filter(Boolean).join(' ')}>
                 <p className="text-2xl sm:text-3xl font-bold text-primary-900">{value}</p>
                 <p className="text-sm font-medium text-neutral-700 mt-0.5">{label}</p>
                 <p className="text-xs text-neutral-400 mt-0.5">{sub}</p>
