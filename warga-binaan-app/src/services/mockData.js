@@ -215,3 +215,109 @@ export const LAYANAN = [
     warna: 'gold',
   },
 ]
+
+// ── Admin: Daftar Kunjungan ───────────────────────────────────────────────────
+export const KUNJUNGAN_LIST = [
+  {
+    id: 1, noTiket: 'KJG-2025-101',
+    namaPengunjung: 'Siti Rahayu', nikPengunjung: '1871234567890001', noHp: '081234567890',
+    hubunganWBP: 'Istri', namaWBP: 'Ahmad Fauzi', noRegisterWBP: 'WK-2022-001',
+    tanggalKunjungan: '2025-06-10', sesi: 'pagi', jumlahPengunjung: 2,
+    status: 'menunggu', createdAt: '2025-05-08T10:30:00',
+  },
+  {
+    id: 2, noTiket: 'KJG-2025-102',
+    namaPengunjung: 'Hendra Gunawan', nikPengunjung: '1802198701230002', noHp: '082345678901',
+    hubunganWBP: 'Saudara Kandung', namaWBP: 'Budi Santoso', noRegisterWBP: 'WK-2023-015',
+    tanggalKunjungan: '2025-06-11', sesi: 'siang', jumlahPengunjung: 1,
+    status: 'menunggu', createdAt: '2025-05-08T13:45:00',
+  },
+  {
+    id: 3, noTiket: 'KJG-2025-103',
+    namaPengunjung: 'Dewi Kurniasih', nikPengunjung: '1805199201230003', noHp: '083456789012',
+    hubunganWBP: 'Istri', namaWBP: 'Rudi Hartono', noRegisterWBP: 'WK-2021-007',
+    tanggalKunjungan: '2025-06-09', sesi: 'pagi', jumlahPengunjung: 3,
+    status: 'disetujui', createdAt: '2025-05-07T09:00:00',
+  },
+  {
+    id: 4, noTiket: 'KJG-2025-104',
+    namaPengunjung: 'Agus Widodo', nikPengunjung: '1803197812340004', noHp: '084567890123',
+    hubunganWBP: 'Orang Tua', namaWBP: 'Dian Permana', noRegisterWBP: 'WK-2024-003',
+    tanggalKunjungan: '2025-06-08', sesi: 'siang', jumlahPengunjung: 2,
+    status: 'disetujui', createdAt: '2025-05-06T14:20:00',
+  },
+  {
+    id: 5, noTiket: 'KJG-2025-105',
+    namaPengunjung: 'Rina Susanti', nikPengunjung: '1809199512340005', noHp: '085678901234',
+    hubunganWBP: 'Istri', namaWBP: 'Yono Prasetyo', noRegisterWBP: 'WK-2022-022',
+    tanggalKunjungan: '2025-06-07', sesi: 'pagi', jumlahPengunjung: 4,
+    status: 'ditolak', createdAt: '2025-05-05T11:10:00',
+  },
+  {
+    id: 6, noTiket: 'KJG-2025-106',
+    namaPengunjung: 'Bambang Suryadi', nikPengunjung: '1801197601230006', noHp: '086789012345',
+    hubunganWBP: 'Orang Tua', namaWBP: 'Eko Wibowo', noRegisterWBP: 'WK-2023-008',
+    tanggalKunjungan: '2025-06-12', sesi: 'siang', jumlahPengunjung: 2,
+    status: 'menunggu', createdAt: '2025-05-09T08:15:00',
+  },
+  {
+    id: 7, noTiket: 'KJG-2025-107',
+    namaPengunjung: 'Maya Sari', nikPengunjung: '1807199301230007', noHp: '087890123456',
+    hubunganWBP: 'Anak', namaWBP: 'Iwan Setiawan', noRegisterWBP: 'WK-2021-019',
+    tanggalKunjungan: '2025-06-06', sesi: 'pagi', jumlahPengunjung: 1,
+    status: 'disetujui', createdAt: '2025-05-04T16:30:00',
+  },
+  {
+    id: 8, noTiket: 'KJG-2025-108',
+    namaPengunjung: 'Tono Kusuma', nikPengunjung: '1804198012340008', noHp: '088901234567',
+    hubunganWBP: 'Saudara Kandung', namaWBP: 'Joko Prasetyo', noRegisterWBP: 'WK-2024-011',
+    tanggalKunjungan: '2025-06-05', sesi: 'siang', jumlahPengunjung: 2,
+    status: 'disetujui', createdAt: '2025-05-03T10:45:00',
+  },
+]
+
+// ── Admin: Daftar Pengaduan ───────────────────────────────────────────────────
+export const PENGADUAN_LIST = [
+  {
+    id: 1, noTiket: 'PGD-2025-101',
+    nama: 'Budi Santoso', noHp: '085678901234', email: '',
+    kategori: 'pelayanan', isi: 'Petugas piket kurang ramah saat proses pendaftaran kunjungan tanggal 6 Mei. Saya diminta menunggu lebih dari 2 jam tanpa penjelasan yang jelas.',
+    anonim: false, status: 'baru', createdAt: '2025-05-07T09:15:00', balasan: '',
+  },
+  {
+    id: 2, noTiket: 'PGD-2025-102',
+    nama: 'Rina Rahayu', noHp: '081234567890', email: 'rina@email.com',
+    kategori: 'kunjungan', isi: 'Jadwal kunjungan yang sudah saya daftarkan dibatalkan sepihak tanpa pemberitahuan. Saya sudah datang jauh-jauh dari luar kota.',
+    anonim: false, status: 'diproses', createdAt: '2025-05-06T14:30:00', balasan: 'Terima kasih atas laporannya. Kami sedang menindaklanjuti keluhan Anda.',
+  },
+  {
+    id: 3, noTiket: 'PGD-2025-103',
+    nama: '', noHp: '', email: '',
+    kategori: 'fasilitas', isi: 'Toilet umum di area tunggu pengunjung dalam kondisi tidak layak. Sudah beberapa kali saya kunjungi kondisinya tidak pernah diperbaiki.',
+    anonim: true, status: 'baru', createdAt: '2025-05-08T07:30:00', balasan: '',
+  },
+  {
+    id: 4, noTiket: 'PGD-2025-104',
+    nama: 'Ahmad Sodik', noHp: '089012345678', email: '',
+    kategori: 'hak_wbp', isi: 'Ayah saya tidak mendapatkan haknya untuk mendapatkan remisi di hari Kemerdekaan padahal catatan perilakunya baik.',
+    anonim: false, status: 'selesai', createdAt: '2025-05-01T10:00:00', balasan: 'Setelah kami periksa, remisi telah diproses dan akan diberikan sesuai ketentuan yang berlaku. Terima kasih.',
+  },
+  {
+    id: 5, noTiket: 'PGD-2025-105',
+    nama: 'Maria Lestari', noHp: '082345678901', email: 'maria@email.com',
+    kategori: 'penitipan', isi: 'Uang yang saya titipkan untuk keperluan anggota keluarga tidak kunjung sampai sudah 2 minggu. Mohon segera ditindaklanjuti.',
+    anonim: false, status: 'diproses', createdAt: '2025-05-05T13:00:00', balasan: 'Kami sedang berkoordinasi dengan petugas keuangan untuk memastikan transaksi Anda.',
+  },
+  {
+    id: 6, noTiket: 'PGD-2025-106',
+    nama: '', noHp: '', email: '',
+    kategori: 'lainnya', isi: 'Informasi jadwal kunjungan di papan pengumuman tidak pernah diperbarui. Sering terjadi kesalahpahaman akibat informasi yang sudah kedaluwarsa.',
+    anonim: true, status: 'baru', createdAt: '2025-05-08T15:45:00', balasan: '',
+  },
+  {
+    id: 7, noTiket: 'PGD-2025-107',
+    nama: 'Heru Wibowo', noHp: '083456789012', email: '',
+    kategori: 'pelayanan', isi: 'Pelayanan di loket registrasi sudah jauh lebih baik dibanding sebelumnya. Terima kasih atas perbaikannya.',
+    anonim: false, status: 'selesai', createdAt: '2025-04-28T11:20:00', balasan: 'Terima kasih atas apresiasi Anda. Kami akan terus berusaha meningkatkan pelayanan.',
+  },
+]

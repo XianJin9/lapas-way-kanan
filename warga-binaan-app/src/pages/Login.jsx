@@ -2,10 +2,12 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Alert, Button, Input } from '../components/ui'
 import useDocumentTitle from '../hooks/useDocumentTitle'
+import { useAuth } from '../contexts/AuthContext'
 
 export default function Login() {
   useDocumentTitle('Masuk')
   const navigate = useNavigate()
+  const { login } = useAuth()
   const [peran, setPeran]     = useState('masyarakat')
   const [form, setForm]       = useState({ nik: '', password: '' })
   const [errors, setErrors]   = useState({})
@@ -28,8 +30,8 @@ export default function Login() {
     setErrMsg('')
     await new Promise((r) => setTimeout(r, 1200))
     setLoading(false)
-    // Simulasi: demo masuk ke beranda
-    navigate('/')
+    login({ nama: peran === 'petugas' ? (form.nik || 'Admin Lapas') : 'Pengguna', role: peran })
+    navigate(peran === 'petugas' ? '/admin' : '/')
   }
 
   return (
@@ -79,6 +81,11 @@ export default function Login() {
             ))}
           </div>
 
+          {peran === 'petugas' && (
+            <Alert variant="info" className="mb-4">
+              Demo: gunakan username <strong>admin</strong> dan password <strong>admin123</strong>
+            </Alert>
+          )}
           {errMsg && <Alert variant="danger" className="mb-4">{errMsg}</Alert>}
 
           <form onSubmit={submit} noValidate className="space-y-4">
