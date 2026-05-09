@@ -1,11 +1,12 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const DEFAULT_NAV = [
-  { label: 'Beranda',   href: '/' },
-  { label: 'Kunjungan', href: '/kunjungan' },
-  { label: 'Informasi', href: '/informasi' },
-  { label: 'Pengaduan', href: '/pengaduan' },
-  { label: 'Kontak',    href: '/kontak' },
+  { label: 'Beranda',   to: '/' },
+  { label: 'Kunjungan', to: '/kunjungan' },
+  { label: 'Informasi', to: '/informasi' },
+  { label: 'Pengaduan', to: '/pengaduan' },
+  { label: 'Berita',    to: '/berita' },
 ]
 
 export default function Header({
@@ -22,9 +23,9 @@ export default function Header({
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
-          <a
-            href="/"
-            className="flex items-center gap-3 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-900 rounded-lg"
+          <Link
+            to="/"
+            className="flex items-center gap-3 shrink-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400 focus-visible:ring-offset-2 focus-visible:ring-offset-primary-900"
             aria-label="Beranda Lapas Way Kanan"
           >
             <div className="w-9 h-9 rounded-full bg-gold-600 flex items-center justify-center shrink-0" aria-hidden="true">
@@ -38,16 +39,16 @@ export default function Header({
                 Lapas Kelas IIB Way Kanan
               </p>
             </div>
-          </a>
+          </Link>
 
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-0.5" aria-label="Navigasi utama">
-            {navItems.map(({ label, href }) => {
-              const active = currentPath === href
+            {navItems.map(({ label, to }) => {
+              const active = currentPath === to || (to !== '/' && currentPath.startsWith(to))
               return (
-                <a
-                  key={href}
-                  href={href}
+                <Link
+                  key={to}
+                  to={to}
                   aria-current={active ? 'page' : undefined}
                   className={[
                     'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
@@ -57,7 +58,7 @@ export default function Header({
                   ].join(' ')}
                 >
                   {label}
-                </a>
+                </Link>
               )
             })}
           </nav>
@@ -76,12 +77,12 @@ export default function Header({
                 </button>
               </div>
             ) : (
-              <a
-                href="/login"
+              <Link
+                to="/login"
                 className="hidden lg:inline-flex items-center gap-1.5 bg-gold-700 text-white text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-gold-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-400"
               >
                 Masuk
-              </a>
+              </Link>
             )}
 
             {/* Hamburger */}
@@ -114,12 +115,12 @@ export default function Header({
             aria-label="Navigasi mobile"
           >
             <div className="flex flex-col gap-1">
-              {navItems.map(({ label, href }) => {
-                const active = currentPath === href
+              {navItems.map(({ label, to }) => {
+                const active = currentPath === to || (to !== '/' && currentPath.startsWith(to))
                 return (
-                  <a
-                    key={href}
-                    href={href}
+                  <Link
+                    key={to}
+                    to={to}
                     onClick={() => setMenuOpen(false)}
                     aria-current={active ? 'page' : undefined}
                     className={[
@@ -130,16 +131,17 @@ export default function Header({
                     ].join(' ')}
                   >
                     {label}
-                  </a>
+                  </Link>
                 )
               })}
               {!user && (
-                <a
-                  href="/login"
+                <Link
+                  to="/login"
                   className="mt-2 bg-gold-700 text-white text-sm font-medium px-3 py-2.5 rounded-lg hover:bg-gold-800 transition-colors text-center"
+                  onClick={() => setMenuOpen(false)}
                 >
                   Masuk
-                </a>
+                </Link>
               )}
             </div>
           </nav>
