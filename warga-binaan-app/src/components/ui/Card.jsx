@@ -28,7 +28,9 @@ export default function Card({
       onClick={onClick}
       role={interactive ? 'button' : undefined}
       tabIndex={interactive ? 0 : undefined}
-      onKeyDown={interactive ? (e) => e.key === 'Enter' && onClick(e) : undefined}
+      onKeyDown={interactive ? (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(e) }
+      } : undefined}
       className={[
         'rounded-xl',
         variantClasses[variant],

@@ -20,8 +20,10 @@ const Textarea = forwardRef(function Textarea(
   const generatedId = useId()
   const textareaId = id ?? generatedId
   const helperId   = `${textareaId}-helper`
-  const hasHelper  = !!(helperText || error)
+  const counterId  = maxLength != null ? `${textareaId}-count` : undefined
   const charCount  = typeof value === 'string' ? value.length : undefined
+
+  const describedBy = [helperId, counterId].filter(Boolean).join(' ')
 
   return (
     <div className={['flex flex-col gap-1.5', wrapperClassName].join(' ')}>
@@ -30,13 +32,15 @@ const Textarea = forwardRef(function Textarea(
           <label htmlFor={textareaId} className="text-sm font-medium text-neutral-700">
             {label}
             {required && (
-              <span className="text-danger-600 ml-0.5" aria-hidden="true">
-                *
-              </span>
+              <span className="text-danger-600 ml-0.5" aria-hidden="true">*</span>
             )}
           </label>
           {maxLength && charCount !== undefined && (
-            <span className="text-xs text-neutral-400">
+            <span
+              id={counterId}
+              aria-live="off"
+              className={['text-xs', charCount >= maxLength ? 'text-danger-600 font-medium' : 'text-neutral-500'].join(' ')}
+            >
               {charCount}/{maxLength}
             </span>
           )}
@@ -52,10 +56,10 @@ const Textarea = forwardRef(function Textarea(
         maxLength={maxLength}
         value={value}
         aria-required={required || undefined}
-        aria-describedby={hasHelper ? helperId : undefined}
+        aria-describedby={describedBy}
         aria-invalid={!!error || undefined}
         className={[
-          'w-full rounded-lg border px-3 py-2 text-sm text-neutral-900',
+          'w-full rounded-lg border px-3 py-2.5 text-sm text-neutral-900',
           'placeholder:text-neutral-400 resize-y',
           'transition-colors duration-150',
           'focus:outline-none focus:ring-2 focus:ring-offset-0',
@@ -68,14 +72,14 @@ const Textarea = forwardRef(function Textarea(
         {...props}
       />
 
-      {hasHelper && (
-        <p
-          id={helperId}
-          className={['text-xs', error ? 'text-danger-600' : 'text-neutral-500'].join(' ')}
-        >
-          {error ?? helperText}
-        </p>
-      )}
+      {/* Always rendered so aria-live fires when error/helperText appears */}
+      <p
+        id={helperId}
+        aria-live="polite"
+        className={['text-xs', error ? 'text-danger-600' : 'text-neutral-500'].join(' ')}
+      >
+        {error ?? helperText ?? ''}
+      </p>
     </div>
   )
 })

@@ -20,7 +20,6 @@ const Input = forwardRef(function Input(
   const generatedId = useId()
   const inputId  = id ?? generatedId
   const helperId = `${inputId}-helper`
-  const hasHelper = !!(helperText || error)
 
   return (
     <div className={['flex flex-col gap-1.5', wrapperClassName].join(' ')}>
@@ -28,9 +27,7 @@ const Input = forwardRef(function Input(
         <label htmlFor={inputId} className="text-sm font-medium text-neutral-700">
           {label}
           {required && (
-            <span className="text-danger-600 ml-0.5" aria-hidden="true">
-              *
-            </span>
+            <span className="text-danger-600 ml-0.5" aria-hidden="true">*</span>
           )}
         </label>
       )}
@@ -48,7 +45,7 @@ const Input = forwardRef(function Input(
           disabled={disabled}
           required={required}
           aria-required={required || undefined}
-          aria-describedby={hasHelper ? helperId : undefined}
+          aria-describedby={helperId}
           aria-invalid={!!error || undefined}
           className={[
             'w-full rounded-lg border text-sm text-neutral-900',
@@ -73,14 +70,14 @@ const Input = forwardRef(function Input(
         )}
       </div>
 
-      {hasHelper && (
-        <p
-          id={helperId}
-          className={['text-xs', error ? 'text-danger-600' : 'text-neutral-500'].join(' ')}
-        >
-          {error ?? helperText}
-        </p>
-      )}
+      {/* Always rendered so aria-live fires when error/helperText appears */}
+      <p
+        id={helperId}
+        aria-live="polite"
+        className={['text-xs', error ? 'text-danger-600' : 'text-neutral-500'].join(' ')}
+      >
+        {error ?? helperText ?? ''}
+      </p>
     </div>
   )
 })

@@ -11,7 +11,7 @@ export default function Spinner({ size = 'md', className = '' }) {
       role="status"
       aria-label="Memuat..."
       className={[
-        'inline-block rounded-full border-current border-r-transparent animate-spin shrink-0',
+        'inline-block rounded-full border-current border-r-transparent animate-spin motion-reduce:animate-pulse shrink-0',
         sizeClasses[size],
         className,
       ].join(' ')}

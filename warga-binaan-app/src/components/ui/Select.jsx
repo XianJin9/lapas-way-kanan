@@ -19,7 +19,6 @@ const Select = forwardRef(function Select(
   const generatedId = useId()
   const selectId = id ?? generatedId
   const helperId = `${selectId}-helper`
-  const hasHelper = !!(helperText || error)
 
   return (
     <div className={['flex flex-col gap-1.5', wrapperClassName].join(' ')}>
@@ -27,9 +26,7 @@ const Select = forwardRef(function Select(
         <label htmlFor={selectId} className="text-sm font-medium text-neutral-700">
           {label}
           {required && (
-            <span className="text-danger-600 ml-0.5" aria-hidden="true">
-              *
-            </span>
+            <span className="text-danger-600 ml-0.5" aria-hidden="true">*</span>
           )}
         </label>
       )}
@@ -41,10 +38,10 @@ const Select = forwardRef(function Select(
           disabled={disabled}
           required={required}
           aria-required={required || undefined}
-          aria-describedby={hasHelper ? helperId : undefined}
+          aria-describedby={helperId}
           aria-invalid={!!error || undefined}
           className={[
-            'w-full rounded-lg border px-3 py-2 pr-8 text-sm',
+            'w-full rounded-lg border px-3 py-2.5 pr-8 text-sm',
             'appearance-none cursor-pointer',
             'transition-colors duration-150',
             'focus:outline-none focus:ring-2 focus:ring-offset-0',
@@ -72,22 +69,21 @@ const Select = forwardRef(function Select(
           })}
         </select>
 
-        {/* Custom arrow */}
-        <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-neutral-400">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+        <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-neutral-400" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
             <path d="m6 9 6 6 6-6" />
           </svg>
         </span>
       </div>
 
-      {hasHelper && (
-        <p
-          id={helperId}
-          className={['text-xs', error ? 'text-danger-600' : 'text-neutral-500'].join(' ')}
-        >
-          {error ?? helperText}
-        </p>
-      )}
+      {/* Always rendered so aria-live fires when error/helperText appears */}
+      <p
+        id={helperId}
+        aria-live="polite"
+        className={['text-xs', error ? 'text-danger-600' : 'text-neutral-500'].join(' ')}
+      >
+        {error ?? helperText ?? ''}
+      </p>
     </div>
   )
 })
