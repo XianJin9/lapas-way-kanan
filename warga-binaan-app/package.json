@@ -1,8 +1,12 @@
 {
   "name": "warga-binaan-app",
+  "version": "0.1.0",
+  "description": "Sistem informasi publik & manajemen warga binaan — Lapas Kelas IIB Way Kanan, Kemenkumham RI",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=20.19"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
