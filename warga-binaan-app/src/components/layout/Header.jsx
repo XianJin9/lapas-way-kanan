@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 const DEFAULT_NAV = [
@@ -16,6 +16,10 @@ export default function Header({
   onLogout,
 }) {
   const [menuOpen, setMenuOpen] = useState(false)
+
+  useEffect(() => {
+    setMenuOpen(false)
+  }, [currentPath])
 
   return (
     <header className="bg-primary-900 shadow-lg sticky top-0 z-40" role="banner">
@@ -92,7 +96,7 @@ export default function Header({
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
               aria-label={menuOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi'}
-              className="lg:hidden p-2 rounded-lg text-primary-300 hover:text-white hover:bg-primary-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400"
+              className="lg:hidden w-11 h-11 flex items-center justify-center rounded-lg text-primary-300 hover:text-white hover:bg-primary-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400"
             >
               {menuOpen ? (
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -124,7 +128,7 @@ export default function Header({
                     onClick={() => setMenuOpen(false)}
                     aria-current={active ? 'page' : undefined}
                     className={[
-                      'px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
+                      'px-3 py-3 rounded-lg text-sm font-medium transition-colors',
                       active
                         ? 'bg-primary-700 text-white'
                         : 'text-primary-200 hover:bg-primary-800 hover:text-white',
@@ -137,7 +141,7 @@ export default function Header({
               {!user && (
                 <Link
                   to="/login"
-                  className="mt-2 bg-gold-700 text-white text-sm font-medium px-3 py-2.5 rounded-lg hover:bg-gold-800 transition-colors text-center"
+                  className="mt-2 bg-gold-700 text-white text-sm font-medium px-3 py-3 rounded-lg hover:bg-gold-800 transition-colors text-center"
                   onClick={() => setMenuOpen(false)}
                 >
                   Masuk
