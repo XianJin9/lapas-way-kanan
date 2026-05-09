@@ -57,7 +57,7 @@ const Input = forwardRef(function Input(
             'focus:outline-none focus:ring-2 focus:ring-offset-0',
             leftIcon  ? 'pl-9'  : 'pl-3',
             rightIcon ? 'pr-9'  : 'pr-3',
-            'py-2',
+            'py-2.5',
             error
               ? 'border-danger-500 bg-danger-50 focus:ring-danger-300 focus:border-danger-500'
               : 'border-neutral-300 bg-white focus:ring-primary-200 focus:border-primary-600',
