@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Alert, Button, Input, Select, Textarea } from '../components/ui'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 
 const KATEGORI_OPT = [
   { value: 'pelayanan',  label: 'Pelayanan Petugas' },
@@ -26,6 +27,7 @@ function validate(data) {
 }
 
 export default function Pengaduan() {
+  useDocumentTitle('Layanan Pengaduan')
   const [form, setForm]       = useState(INIT)
   const [errors, setErrors]   = useState({})
   const [loading, setLoading] = useState(false)

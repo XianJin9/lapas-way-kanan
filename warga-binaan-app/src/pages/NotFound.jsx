@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 
 export default function NotFound() {
+  useDocumentTitle('Halaman Tidak Ditemukan')
   return (
     <div className="min-h-screen bg-neutral-50 flex items-center justify-center px-4">
       <div className="text-center max-w-md">

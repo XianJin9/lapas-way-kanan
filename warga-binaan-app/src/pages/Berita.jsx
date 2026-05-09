@@ -1,6 +1,7 @@
-import { Link, useParams } from 'react-router-dom'
-import { Badge, Card, EmptyState } from '../components/ui'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Badge, EmptyState } from '../components/ui'
 import { BERITA } from '../services/mockData'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 
 const KATEGORI_COLOR = {
   Pengumuman:  'primary',
@@ -17,6 +18,7 @@ function formatTanggal(iso) {
 
 // ── Detail artikel ────────────────────────────────────────────────────────────
 function ArtikelDetail({ artikel }) {
+  useDocumentTitle(artikel.judul)
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10">
       {/* Breadcrumb */}
@@ -36,7 +38,7 @@ function ArtikelDetail({ artikel }) {
             <Badge variant={KATEGORI_COLOR[artikel.kategori] ?? 'neutral'}>
               {artikel.kategori}
             </Badge>
-            <time dateTime={artikel.tanggal} className="text-sm text-neutral-400">
+            <time dateTime={artikel.tanggal} className="text-sm text-neutral-500">
               {formatTanggal(artikel.tanggal)}
             </time>
           </div>
@@ -67,7 +69,7 @@ function ArtikelDetail({ artikel }) {
 
         {/* Footer artikel */}
         <footer className="mt-10 pt-6 border-t border-neutral-200">
-          <p className="text-xs text-neutral-400">
+          <p className="text-xs text-neutral-500">
             Diterbitkan pada {formatTanggal(artikel.tanggal)} oleh {artikel.penulis}
           </p>
         </footer>
@@ -87,6 +89,7 @@ function ArtikelDetail({ artikel }) {
 
 // ── Daftar berita ─────────────────────────────────────────────────────────────
 function DaftarBerita() {
+  useDocumentTitle('Berita & Pengumuman')
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
       {/* Breadcrumb */}
@@ -105,7 +108,7 @@ function DaftarBerita() {
             Informasi terkini dari Lapas Kelas IIB Way Kanan
           </p>
         </div>
-        <span className="text-sm text-neutral-400">{BERITA.length} artikel</span>
+        <span className="text-sm text-neutral-500">{BERITA.length} artikel</span>
       </div>
 
       {BERITA.length === 0 ? (
@@ -126,7 +129,7 @@ function DaftarBerita() {
                 <Badge variant={KATEGORI_COLOR[b.kategori] ?? 'neutral'} size="sm">
                   {b.kategori}
                 </Badge>
-                <time dateTime={b.tanggal} className="text-xs text-neutral-400">
+                <time dateTime={b.tanggal} className="text-xs text-neutral-500">
                   {formatTanggal(b.tanggal)}
                 </time>
               </div>
@@ -150,6 +153,7 @@ function DaftarBerita() {
 // ── Router ────────────────────────────────────────────────────────────────────
 export default function Berita() {
   const { id } = useParams()
+  const navigate = useNavigate()
 
   if (id) {
     const artikel = BERITA.find((b) => String(b.id) === id)
@@ -160,7 +164,7 @@ export default function Berita() {
             icon="📄"
             title="Artikel tidak ditemukan"
             description="Artikel yang Anda cari tidak ada atau telah dihapus."
-            action={{ label: 'Lihat Semua Berita', onClick: () => window.location.href = '/berita' }}
+            action={{ label: 'Lihat Semua Berita', onClick: () => navigate('/berita') }}
           />
         </div>
       )

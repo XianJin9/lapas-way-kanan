@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Alert, Button, Input, Select } from '../components/ui'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 
 const LANGKAH = ['Data Pengunjung', 'Data WBP', 'Jadwal & Sesi', 'Konfirmasi']
 
@@ -109,12 +110,18 @@ function RowInfo({ label, value }) {
 }
 
 export default function KunjunganDaftar() {
+  useDocumentTitle('Pendaftaran Kunjungan')
   const [step, setStep]       = useState(1)
   const [form, setForm]       = useState(INIT_FORM)
   const [errors, setErrors]   = useState({})
   const [loading, setLoading] = useState(false)
   const [done, setDone]       = useState(false)
   const [noTiket, setNoTiket] = useState('')
+  const stepRef = useRef(null)
+
+  useEffect(() => {
+    stepRef.current?.focus()
+  }, [step])
 
   const set = (field) => (e) =>
     setForm((f) => ({ ...f, [field]: e.target.type === 'checkbox' ? e.target.checked : e.target.value }))
@@ -190,6 +197,9 @@ export default function KunjunganDaftar() {
       </p>
 
       <StepBar current={step} />
+
+      {/* Step content — focus moves here on step change for screen readers */}
+      <div ref={stepRef} tabIndex={-1} className="outline-none">
 
       {/* ── LANGKAH 1 ── */}
       {step === 1 && (
@@ -314,6 +324,8 @@ export default function KunjunganDaftar() {
           </div>
         </div>
       )}
+
+      </div>{/* end step content */}
 
       {/* Navigasi langkah */}
       <div className="flex items-center justify-between mt-8 pt-6 border-t border-neutral-200">

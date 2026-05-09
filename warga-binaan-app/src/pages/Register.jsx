@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Alert, Button, Input } from '../components/ui'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 
 const INIT = { nama: '', nik: '', noHp: '', email: '', password: '', konfirmasiPassword: '' }
 
@@ -16,6 +17,7 @@ function validate(data) {
 }
 
 export default function Register() {
+  useDocumentTitle('Daftar Akun')
   const navigate = useNavigate()
   const [form, setForm]       = useState(INIT)
   const [errors, setErrors]   = useState({})

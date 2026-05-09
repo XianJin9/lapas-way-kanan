@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Badge, Card } from '../components/ui'
 import { BERITA, LAYANAN, STATS } from '../services/mockData'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 
 // ── Ikon layanan ─────────────────────────────────────────────────────────────
 const iconColorMap = {
@@ -26,6 +27,7 @@ function formatTanggal(iso) {
 }
 
 export default function Home() {
+  useDocumentTitle('Beranda')
   const beritaTerbaru = BERITA.slice(0, 3)
   const kapasitasPct  = Math.round((STATS.totalWBP / STATS.kapasitas) * 100)
 
@@ -96,7 +98,7 @@ export default function Home() {
               ].filter(Boolean).join(' ')}>
                 <p className="text-2xl sm:text-3xl font-bold text-primary-900">{value}</p>
                 <p className="text-sm font-medium text-neutral-700 mt-0.5">{label}</p>
-                <p className="text-xs text-neutral-400 mt-0.5">{sub}</p>
+                <p className="text-xs text-neutral-500 mt-0.5">{sub}</p>
               </div>
             ))}
           </div>
@@ -185,7 +187,7 @@ export default function Home() {
                   <Badge variant={kategoriColor[b.kategori] ?? 'neutral'} size="sm">
                     {b.kategori}
                   </Badge>
-                  <span className="text-xs text-neutral-400">{formatTanggal(b.tanggal)}</span>
+                  <span className="text-xs text-neutral-500">{formatTanggal(b.tanggal)}</span>
                 </div>
                 <h3 className="font-semibold text-neutral-900 text-sm leading-snug mb-2 group-hover:text-primary-900 transition-colors line-clamp-2">
                   {b.judul}

@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Alert, Button, Input } from '../components/ui'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 
 export default function Login() {
+  useDocumentTitle('Masuk')
   const navigate = useNavigate()
   const [peran, setPeran]     = useState('masyarakat')
   const [form, setForm]       = useState({ nik: '', password: '' })

@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Alert, Badge, Button, Card, EmptyState, Input, Skeleton } from '../components/ui'
 import { WBP_DATA } from '../services/mockData'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 
 function formatTanggal(iso) {
   if (!iso) return '—'
@@ -79,7 +80,7 @@ function HasilWBP({ wbp }) {
                 <p className="text-xs text-neutral-500 mb-0.5">Bebas Murni (tanpa remisi)</p>
                 <p className="text-base font-bold text-neutral-900">{formatTanggal(wbp.tanggalBebasMurni)}</p>
                 {sisaMurni && (
-                  <p className="text-xs text-neutral-400 mt-0.5">±{sisaMurni} hari lagi</p>
+                  <p className="text-xs text-neutral-500 mt-0.5">±{sisaMurni} hari lagi</p>
                 )}
               </div>
               <div className="bg-success-50 border border-success-200 rounded-lg p-3">
@@ -102,6 +103,8 @@ function HasilWBP({ wbp }) {
 }
 
 export default function MasaTahanan() {
+  useDocumentTitle('Cek Masa Tahanan')
+  const navigate = useNavigate()
   const [query, setQuery]       = useState('')
   const [loading, setLoading]   = useState(false)
   const [hasil, setHasil]       = useState(null)
@@ -184,7 +187,7 @@ export default function MasaTahanan() {
           icon="🔍"
           title="Data tidak ditemukan"
           description={`Warga binaan dengan kata kunci "${query}" tidak ditemukan dalam sistem. Periksa kembali nama atau nomor registrasi, atau hubungi petugas kami.`}
-          action={{ label: 'Hubungi Petugas', onClick: () => window.location.href = '/kontak' }}
+          action={{ label: 'Hubungi Petugas', onClick: () => navigate('/kontak') }}
         />
       )}
 
