@@ -1,17 +1,19 @@
+import { Link } from 'react-router-dom'
+
 const LAYANAN = [
-  { label: 'Pendaftaran Kunjungan', href: '/kunjungan' },
-  { label: 'Cek Masa Tahanan',      href: '/masa-tahanan' },
-  { label: 'Penitipan Uang',        href: '/penitipan' },
-  { label: 'Layanan Pengaduan',     href: '/pengaduan' },
-  { label: 'Berita & Pengumuman',   href: '/berita' },
+  { label: 'Pendaftaran Kunjungan', to: '/kunjungan' },
+  { label: 'Cek Masa Tahanan',      to: '/masa-tahanan' },
+  { label: 'Penitipan Uang',        to: '/penitipan' },
+  { label: 'Layanan Pengaduan',     to: '/pengaduan' },
+  { label: 'Berita & Pengumuman',   to: '/berita' },
 ]
 
 const INFORMASI = [
-  { label: 'Profil Lapas',    href: '/profil' },
-  { label: 'Visi & Misi',    href: '/visi-misi' },
-  { label: 'Struktur Organisasi', href: '/struktur' },
-  { label: 'Kebijakan Privasi',   href: '/privasi' },
-  { label: 'Syarat Penggunaan',   href: '/syarat' },
+  { label: 'Profil Lapas',          to: '/profil' },
+  { label: 'Visi & Misi',          to: '/visi-misi' },
+  { label: 'Struktur Organisasi',   to: '/struktur' },
+  { label: 'Kebijakan Privasi',     to: '/privasi' },
+  { label: 'Syarat Penggunaan',     to: '/syarat' },
 ]
 
 export default function Footer() {
@@ -65,12 +67,12 @@ export default function Footer() {
             <h3 className="text-white text-sm font-semibold mb-4 uppercase tracking-wide">
               Layanan
             </h3>
-            <ul className="space-y-2 text-sm" role="list">
-              {LAYANAN.map(({ label, href }) => (
-                <li key={href}>
-                  <a href={href} className="hover:text-white transition-colors">
+            <ul className="space-y-0.5 text-sm" role="list">
+              {LAYANAN.map(({ label, to }) => (
+                <li key={to}>
+                  <Link to={to} className="block py-1.5 hover:text-white transition-colors">
                     {label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -81,12 +83,12 @@ export default function Footer() {
             <h3 className="text-white text-sm font-semibold mb-4 uppercase tracking-wide">
               Informasi
             </h3>
-            <ul className="space-y-2 text-sm" role="list">
-              {INFORMASI.map(({ label, href }) => (
-                <li key={href}>
-                  <a href={href} className="hover:text-white transition-colors">
+            <ul className="space-y-0.5 text-sm" role="list">
+              {INFORMASI.map(({ label, to }) => (
+                <li key={to}>
+                  <Link to={to} className="block py-1.5 hover:text-white transition-colors">
                     {label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
