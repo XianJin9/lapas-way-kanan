@@ -33,11 +33,11 @@ function HasilWBP({ wbp }) {
           <div className="w-12 h-12 rounded-full bg-primary-700 flex items-center justify-center text-white font-bold text-lg shrink-0" aria-hidden="true">
             {wbp.nama.charAt(0)}
           </div>
-          <div>
-            <p className="text-primary-300 text-xs font-medium uppercase tracking-wide mb-0.5">
+          <div className="flex-1 min-w-0">
+            <p className="text-primary-300 text-xs font-medium uppercase tracking-wide mb-0.5 truncate">
               No. Registrasi: {wbp.noRegister}
             </p>
-            <h2 className="text-white text-lg font-bold">{wbp.nama}</h2>
+            <h2 className="text-white text-lg font-bold truncate">{wbp.nama}</h2>
             <p className="text-primary-200 text-sm">
               Lahir di {wbp.tempatLahir},{' '}
               {new Date(wbp.tanggalLahir).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
@@ -159,7 +159,7 @@ export default function MasaTahanan() {
             </svg>
           }
         />
-        <Button type="submit" loading={loading}>
+        <Button type="submit" loading={loading} className="shrink-0">
           {loading ? 'Mencari...' : 'Cari'}
         </Button>
       </form>

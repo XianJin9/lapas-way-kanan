@@ -66,7 +66,7 @@ export default function Login() {
                 aria-selected={peran === id}
                 onClick={() => { setPeran(id); setErrors({}); setErrMsg('') }}
                 className={[
-                  'flex-1 py-2 px-3 text-sm font-medium rounded-md transition-colors',
+                  'flex-1 py-2.5 px-3 text-sm font-medium rounded-md transition-colors',
                   peran === id
                     ? 'bg-primary-900 text-white shadow-sm'
                     : 'text-neutral-500 hover:text-neutral-700',
